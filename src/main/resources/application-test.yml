@@ -1,0 +1,7 @@
+app:
+  greeting:
+    message: "Hello from TEST"
+    max-length: 50
+    enabled: true
+server:
+  port: 0
