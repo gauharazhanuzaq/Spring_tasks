@@ -5,3 +5,10 @@ app:
     enabled: true
 server:
   port: 0
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring_tasks_test
+    username: ${DB_USER:spring}
+    password: ${DB_PASSWORD:spring}
+  jpa:
+    show-sql: false

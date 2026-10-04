@@ -3,3 +3,13 @@ spring:
     name: practice1
   profiles:
     active: dev
+  sql:
+    init:
+      mode: always
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true

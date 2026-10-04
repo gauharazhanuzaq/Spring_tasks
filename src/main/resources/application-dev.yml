@@ -5,3 +5,12 @@ app:
     enabled: true
 server:
   port: 8081
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring_tasks
+    username: ${DB_USER:spring}
+    password: ${DB_PASSWORD:spring}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
