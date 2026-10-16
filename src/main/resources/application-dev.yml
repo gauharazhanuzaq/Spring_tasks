@@ -10,6 +10,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/spring_tasks
     username: ${DB_USER:spring}
     password: ${DB_PASSWORD:spring}
+  flyway:
+    locations: classpath:db/migration,classpath:db/seed
   jpa:
     hibernate:
       ddl-auto: update

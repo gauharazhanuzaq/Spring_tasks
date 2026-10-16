@@ -3,9 +3,8 @@ spring:
     name: practice1
   profiles:
     active: dev
-  sql:
-    init:
-      mode: always
+  flyway:
+    enabled: true
   jpa:
     open-in-view: false
     hibernate:
