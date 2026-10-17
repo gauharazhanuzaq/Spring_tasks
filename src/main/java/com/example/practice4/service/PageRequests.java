@@ -22,7 +22,7 @@ final class PageRequests {
 
         Sort sort = Sort.by(dir, property);
         if (!"id".equals(property)) {
-            sort = sort.and(Sort.by(Sort.Direction.ASC, "id"));   // стабильный порядок между страницами
+            sort = sort.and(Sort.by(Sort.Direction.ASC, "id"));  
         }
         return PageRequest.of(safePage, safeSize, sort);
     }

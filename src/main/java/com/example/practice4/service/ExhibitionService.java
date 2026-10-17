@@ -69,8 +69,8 @@ public class ExhibitionService {
                 .orElseThrow(() -> new NotFoundException("Exhibition " + exhibitionId + " not found"));
         Artwork artwork = artworkRepository.findById(artworkId)
                 .orElseThrow(() -> new NotFoundException("Artwork " + artworkId + " not found"));
-        exhibition.addArtwork(artwork);   // ленивая коллекция подгружается внутри транзакции
-        return toDto(exhibition);         // изменения сохранятся при коммите (dirty checking)
+        exhibition.addArtwork(artwork);   
+        return toDto(exhibition);      
     }
 
     private static ExhibitionDto toDto(Exhibition e) {

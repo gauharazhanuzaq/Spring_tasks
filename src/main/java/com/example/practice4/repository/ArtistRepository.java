@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ArtistRepository extends JpaRepository<Artist, Long> {
-    Page<Artist> findByCountryIgnoreCase(String country, Pageable pageable);          // derived
+    Page<Artist> findByCountryIgnoreCase(String country, Pageable pageable);        
 
     @Query("select a from Artist a where lower(a.name) like lower(concat('%', :text, '%'))")
-    Page<Artist> searchByName(@Param("text") String text, Pageable pageable);          // @Query
+    Page<Artist> searchByName(@Param("text") String text, Pageable pageable);        
 }
