@@ -3,6 +3,8 @@ app:
     message: "Hello from DEV, Gauhar!"
     max-length: 100
     enabled: true
+  aspect:
+    slow-threshold-ms: 200
 server:
   port: 8081
 spring:
@@ -13,6 +15,7 @@ spring:
   flyway:
     locations: classpath:db/migration,classpath:db/seed
   jpa:
-    hibernate:
-      ddl-auto: update
     show-sql: true
+logging:
+  level:
+    com.example.practice5.aspect: info

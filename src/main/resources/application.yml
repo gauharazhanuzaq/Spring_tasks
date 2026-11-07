@@ -5,6 +5,11 @@ spring:
     active: dev
   flyway:
     enabled: true
+  cache:
+    type: caffeine
+    cache-names: artworks
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=60s
   jpa:
     open-in-view: false
     hibernate:

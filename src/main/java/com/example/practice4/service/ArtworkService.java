@@ -6,6 +6,8 @@ import com.example.practice4.entity.Artwork;
 import com.example.practice4.exception.NotFoundException;
 import com.example.practice4.repository.ArtistRepository;
 import com.example.practice4.repository.ArtworkRepository;
+import org.springframework.cache.annotation.CacheEvict;   // practice 5
+import org.springframework.cache.annotation.Cacheable;    // practice 5
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class ArtworkService {
         this.artistRepository = artistRepository;
     }
 
+    // practice 5: результат кэшируется, ключ включает все параметры запроса
+    @Cacheable(cacheNames = "artworks",
+               key = "{#style, #text, #page, #size, #sortBy, #direction}")
     @Transactional(readOnly = true)
     public PageResponse<ArtworkDto> find(String style, String text,
                                          int page, int size, String sortBy, String direction) {
@@ -62,6 +67,8 @@ public class ArtworkService {
                 .orElseThrow(() -> new NotFoundException("Artwork " + id + " not found"));
     }
 
+    // practice 5: после создания картины список в кэше устарел, очищаем его
+    @CacheEvict(cacheNames = "artworks", allEntries = true)
     @Transactional
     public ArtworkDto create(CreateArtworkRequest request) {
         Artist artist = artistRepository.findById(request.artistId())
