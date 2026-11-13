@@ -1,14 +1,21 @@
+
 package com.example.practice4.controller;
 
 import com.example.practice4.dto.*;
 import com.example.practice4.service.ArtistService;
 import com.example.practice4.service.ArtworkService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/artists")
+@Tag(name = "Artists", description = "Artists catalog")
 public class ArtistController {
 
     private final ArtistService artistService;
@@ -19,6 +26,10 @@ public class ArtistController {
         this.artworkService = artworkService;
     }
 
+    @Operation(summary = "List artists",
+               description = "Paged list; filter by country or artist name.")
+    @ApiResponse(responseCode = "200", description = "Page of artists")
+    @ApiResponse(responseCode = "400", description = "Invalid request parameters")
     @GetMapping
     public PageResponse<ArtistDto> list(
             @RequestParam(required = false) String country,
@@ -30,11 +41,19 @@ public class ArtistController {
         return artistService.find(country, text, page, size, sortBy, direction);
     }
 
+    @Operation(summary = "Get artist by ID")
+    @ApiResponse(responseCode = "200", description = "Artist found")
+    @ApiResponse(responseCode = "404", description = "Artist not found")
     @GetMapping("/{id}")
     public ArtistDto get(@PathVariable Long id) {
         return artistService.get(id);
     }
 
+    @Operation(summary = "Get artworks by artist ID",
+               description = "Returns a paged list of artworks belonging to the specified artist.")
+    @ApiResponse(responseCode = "200", description = "Page of artist's artworks")
+    @ApiResponse(responseCode = "400", description = "Invalid pagination parameters")
+    @ApiResponse(responseCode = "404", description = "Artist not found")
     @GetMapping("/{id}/artworks")
     public PageResponse<ArtworkDto> artworks(
             @PathVariable Long id,
@@ -45,6 +64,9 @@ public class ArtistController {
         return artworkService.findByArtist(id, page, size, sortBy, direction);
     }
 
+    @Operation(summary = "Create artist")
+    @ApiResponse(responseCode = "201", description = "Artist created")
+    @ApiResponse(responseCode = "400", description = "Validation error")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ArtistDto create(@Valid @RequestBody CreateArtistRequest request) {

@@ -26,8 +26,10 @@ public class ServiceLoggingAspect {
         this.slowThresholdMs = slowThresholdMs;
     }
 
-    @Pointcut("execution(public * com.example.practice4.service..*(..))")
-    void serviceMethods() { }
+    @Pointcut("execution(public * com.example.practice4.service..*(..)) "
+        + "|| execution(public * com.example.practice6.service..*(..)) "
+        + "|| execution(public * com.example.practice6.client..*(..))")
+void serviceMethods() { }
 
     @Around("serviceMethods()")
     public Object logAndTime(ProceedingJoinPoint pjp) throws Throwable {

@@ -1,3 +1,10 @@
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
 spring:
   application:
     name: practice1
@@ -17,3 +24,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+app:
+  rates:
+    base-url: https://open.er-api.com/v6
+    connect-timeout: 1s
+    read-timeout: 2s
