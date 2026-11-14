@@ -4,8 +4,12 @@ import com.example.practice6.dto.PriceResponse;
 import com.example.practice6.service.PriceConversionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,6 +29,9 @@ public class ArtworkPriceController {
     @ApiResponse(responseCode = "200", description = "Converted price, or fallback with the base price")
     @ApiResponse(responseCode = "400", description = "Invalid currency code")
     @ApiResponse(responseCode = "404", description = "Artwork not found")
+    @ApiResponse(responseCode = "404", description = "Artwork not found",
+        content = @Content(mediaType = "application/problem+json",
+                schema = @Schema(implementation = ProblemDetail.class)))
     @GetMapping("/{id}/price")
     public PriceResponse price(
             @PathVariable Long id,
